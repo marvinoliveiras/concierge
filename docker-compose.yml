@@ -1,0 +1,23 @@
+services:
+    server-apache:
+        build: .
+        restart: always
+        ports:
+            - 80:80
+        volumes:
+            - .:/var/www/html
+    db:
+        image: mariadb
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: example
+            MARIADB_DATABASE: concierge_db
+        ports:
+            - 3333:3306
+    adminer:
+        depends_on:
+            - db
+        image: adminer
+        restart: always
+        ports:
+            - 8888:8080
